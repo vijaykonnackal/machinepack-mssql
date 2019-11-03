@@ -1,19 +1,19 @@
 version: "3"
+
 services:
   machinepack-mssql:
-    build: .
-    volumes:
-      - .:/usr/src/app
-    networks:
-      - database
+    build:
+      context: .
+    environment:
+      - SA_PASSWORD
+      - MSSQL_HOST=sqlserver
+      - MSSQL_PORT=1433
+      - MSSQL_USER=sa
+      - MSSQL_PASSWORD=${SA_PASSWORD}
+      - MSSQL_DB=sails-test
 
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
     environment:
-      - ACCEPT_EULA=Y
+      - ACCEPT_EULA='Y'
       - SA_PASSWORD
-    networks:
-      database:
-
-networks:
-  database:

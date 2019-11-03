@@ -2,3 +2,11 @@
 language: node_js
 node_js:
   - 10
+env:
+  - SA_PASSWORD
+services:
+  - docker
+before_script:
+  - sudo docker run --name=mssql-server-linux-latest -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=$SA_PASSWORD' -p 1433:1433 -d microsoft/mssql-server-linux:2017-latest
+  - sudo docker cp test/docker/sqlserver.setup.sql mssql-server-linux-latest:sqlserver.setup.sql
+  - sudo docker exec -it mssql-server-linux-latest /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P '$SA_PASSWORD' -i sqlserver.setup.sql

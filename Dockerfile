@@ -1,11 +1,14 @@
 FROM node:10
 
-#RUN npm install -g eslint && \
 RUN mkdir -p /opt/machinepack-mssql
+
 WORKDIR /opt/machinepack-mssql
-ADD package.json package.json
+COPY package.json package.json
 RUN npm install
 
+COPY ./test/docker/* ./
+RUN chmod +x *.sh
 ADD . .
 
-CMD ["npm","test"]
+CMD ["./wait-for-it.sh", "-t", "60", "sqlserver:1433", "--", "./compose-test.sh"]
+
