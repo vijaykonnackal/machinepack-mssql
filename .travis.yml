@@ -1,14 +1,4 @@
+
 language: node_js
 node_js:
-  - "10"
-sudo: false
-services:
-  - mssql
-addons:
-  mssql: "2017"
-env:
-  - DB_USER=sails DB_PASS='sails'
-before_script:
-  - psql -c 'create database sails-test;' -U sa
-  - psql -c "create user sails with password 'sails';"
-  - psql -c "grant all privileges on database sails-test to sails;"
+  - 10
