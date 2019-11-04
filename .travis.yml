@@ -8,7 +8,6 @@ services:
   - docker
 before_script:
   - sudo docker run --name=mssql-server-2017-latest -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=$SA_PASSWORD' -p 1433:1433 -d microsoft/mssql-server-linux:2017-latest
-  - sudo docker cp test/docker/wait-for-it.sh mssql-server-2017-latest:wait-for-it.sh
-  - sudo docker cp test/docker/sqlserver.setup.sql mssql-server-2017-latest:sqlserver.setup.sql
-  - sudo docker exec -it mssql-server-2017-latest chmod 777 wait-for-it.sh
-  - sudo docker exec -it mssql-server-2017-latest /wait-for-it.sh -t 60 localhost:1433 --
+  - sudo docker cp test/docker mssql-server-2017-latest:/machinepack-mssql
+  - sudo docker exec -it mssql-server-2017-latest -w /machinepack-mssql chmod 777 *.sh
+  - sudo docker exec -it mssql-server-2017-latest -w /machinepack-mssql ./wait-for-it.sh -t 60 localhost:1433 -- ./travis-test.sh
