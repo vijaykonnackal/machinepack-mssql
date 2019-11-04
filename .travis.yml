@@ -4,12 +4,13 @@ node_js:
   - 10
 
 env:
-  - SA_PASSWORD
-  - MSSQL_HOST=localhost
-  - MSSQL_PORT=1433
-  - MSSQL_USER=sa
-  - MSSQL_PASSWORD=${SA_PASSWORD}
-  - MSSQL_DB=sails-test
+  global:
+    - SA_PASSWORD
+    - MSSQL_HOST=localhost
+    - MSSQL_PORT=1433
+    - MSSQL_USER=sa
+    - MSSQL_PASSWORD=${SA_PASSWORD}
+    - MSSQL_DB=sails-test
 
 services:
   - docker
